@@ -1,0 +1,379 @@
+:root {
+  /* 支付宝蓝 / Alipay blue */
+  --blue: #1677ff;
+  --blue-grad: linear-gradient(135deg, #4e9bff 0%, #1677ff 58%, #0e63e6 100%);
+  --blue-soft: #e8f1ff;
+  /* 基金金橙（主收益线）*/
+  --gold: #fa8c16;
+  /* 中性 */
+  --bg: #f2f4f7;
+  --card: #ffffff;
+  --ink: #1a1a1a;
+  --ink-2: #333740;
+  --muted: #8a9099;
+  --faint: #b6bcc4;
+  --line: #f0f2f5;
+  --line-2: #eef0f3;
+  /* 涨红跌绿 / 仅用于带正负的数值 */
+  --up: #fa5151;
+  --up-soft: #fff1f0;
+  --down: #00b578;
+  --down-soft: #e6fff7;
+
+  --num: 'DM Sans', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--num);
+  color: var(--ink);
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 18px 14px 40px;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* ============ 蓝色钱包横幅 / wallet banner ============ */
+.banner {
+  position: relative;
+  overflow: hidden;
+  background: var(--blue-grad);
+  border-radius: 18px;
+  padding: 22px 24px 24px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 22px rgba(22, 119, 255, 0.26);
+}
+.banner::before {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -52px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+.banner::after {
+  content: '';
+  position: absolute;
+  right: 60px;
+  bottom: -60px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+.banner > * {
+  position: relative;
+  z-index: 1;
+}
+
+.banner-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.brand {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+.badge {
+  font-size: 0.7rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 11px;
+  border-radius: 999px;
+}
+.banner-label {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.86);
+  margin-bottom: 2px;
+}
+.banner-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.6px;
+  line-height: 1;
+  /* 裁掉字体上下的行内留白，使数字更贴近标签与明细 */
+  margin: 10px 0 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin-top: 8px;
+}
+.breakdown div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.breakdown span {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+.breakdown b {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.2px;
+  font-variant-numeric: tabular-nums;
+}
+/* 本金（无胶囊的纯文字值）：略大字号 + 与投资收益胶囊同一行高/内边距，保持视觉居中平衡 */
+.breakdown b:not(.up):not(.down) {
+  font-size: 1.22rem;
+  line-height: 1.5;
+  display: inline-block;
+  padding: 1px 0;
+}
+
+.chips {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.chip {
+  flex: 1;
+  min-width: 100px;
+  background: rgba(255, 255, 255, 0.17);
+  border-radius: 13px;
+  padding: 9px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.chip span {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+.chip b {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.2px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 头部：与正负相关的数字用 涨红跌绿（红/绿胶囊底 + 白字）；本金/总额/基准用白 */
+.banner .soft {
+  color: rgba(255, 255, 255, 0.86);
+}
+.banner .up,
+.banner .down {
+  display: inline-block;
+  align-self: flex-start;
+  color: #fff;
+  padding: 1px 9px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-shadow: none;
+}
+.banner .up {
+  background: #fa5151;
+}
+.banner .down {
+  background: #00b578;
+}
+/* 投资收益 / 收益率 两个胶囊：字号与高度保持一致（收益率较长，禁止换行避免变高）*/
+.breakdown .up,
+.breakdown .down {
+  font-size: 1.08rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* ============ 卡片 / cards ============ */
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 12px rgba(20, 30, 55, 0.04);
+}
+.card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.card h2::before {
+  content: '';
+  width: 4px;
+  height: 15px;
+  border-radius: 2px;
+  background: var(--blue);
+}
+.chart-box {
+  height: 340px;
+}
+
+/* ---- 自定义图例 ---- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-bottom: 14px;
+  padding-left: 1px;
+}
+.lg {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: var(--ink-2);
+}
+.lg .mk {
+  flex: none;
+}
+.lg .mk.line {
+  width: 17px;
+  height: 3px;
+  border-radius: 2px;
+}
+.lg .mk.band {
+  width: 17px;
+  height: 11px;
+  border-radius: 3px;
+  background: rgba(22, 119, 255, 0.24);
+  border: 1px solid rgba(22, 119, 255, 0.42);
+}
+.lg .mk.bar {
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--up) 55%, var(--down) 55%);
+}
+.lg b {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.lg b.gold {
+  color: var(--gold);
+}
+.lg b.dim {
+  color: var(--muted);
+}
+
+/* ============ 明细表 / table ============ */
+/* 有存入明细的行：可点击展开 */
+.row-clickable {
+  cursor: pointer;
+}
+
+/* 斑马纹：奇数行浅灰底，区分相邻行 */
+.ant-table-wrapper .row-alt > .ant-table-cell {
+  background: #f7f9fc;
+}
+/* hover 高亮优先于斑马纹 */
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > .ant-table-cell {
+  background: var(--blue-soft);
+}
+
+.detail-deposits {
+  margin: 0;
+  padding: 4px 0 4px 2px;
+  list-style: none;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+}
+.detail-deposits li {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 3px 0;
+}
+.detail-deposits .notes {
+  color: var(--muted);
+}
+.detail-deposits .empty {
+  color: var(--faint);
+}
+
+.up {
+  color: var(--up);
+  font-weight: 600;
+}
+.down {
+  color: var(--down);
+  font-weight: 600;
+}
+.dim {
+  color: #5c636e;
+}
+.pill {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--up-soft);
+  color: var(--up);
+}
+.pill.neg {
+  background: var(--down-soft);
+  color: var(--down);
+}
+
+/* ============ 落款 ============ */
+.slogan {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 800;
+  font-size: 1.02rem;
+  letter-spacing: 0.6px;
+  color: var(--gold);
+}
+
+/* ============ 动效 ============ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.reveal {
+  opacity: 0;
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 460px) {
+  .banner-amount {
+    font-size: 2.2rem;
+  }
+  .breakdown {
+    gap: 20px;
+  }
+  .chip {
+    min-width: calc(50% - 5px);
+  }
+}

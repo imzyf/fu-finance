@@ -1,0 +1,10 @@
+.gstack/
+node_modules/
+dist/
+.wrangler/
+*.local
+.dev.vars
+.DS_Store
+
+# TypeScript incremental build cache
+*.tsbuildinfo

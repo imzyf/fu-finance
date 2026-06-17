@@ -1,0 +1,41 @@
+name: Deploy to Cloudflare Workers
+
+on:
+  push:
+    branches: [main] # standalone app repo: every change to main is deployable
+  workflow_dispatch: # plus manual re-deploy
+
+permissions:
+  contents: read
+
+concurrency: # never let two deploys race; newest wins
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: prod # use the "prod" Environment's secrets + protection rules
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4 # version read from package.json "packageManager"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24 # pnpm 11 requires Node >= 22.13
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm test --run # Vitest gate (compute.ts / kpi.ts) — fail = no deploy
+
+      - run: pnpm build # tsc + vite build (@cloudflare/vite-plugin bundles the Worker too) → dist/
+
+      - name: Deploy the Worker + static assets to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          wranglerVersion: "4.103.0" # @cloudflare/vite-plugin peer-requires wrangler ^4.103.0
+          apiToken: ${{ secrets.CLOUDFLARE_API_PAGES_TOKEN }} # needs Workers Scripts: Edit
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy # reads wrangler.jsonc (name + main + assets); DATABASE_URL is a Worker secret, not needed here

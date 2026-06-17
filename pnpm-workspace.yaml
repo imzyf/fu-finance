@@ -1,0 +1,6 @@
+# pnpm 11 settings (this file is pnpm's config home; the package.json "pnpm" field is no longer read).
+verifyDepsBeforeRun: false # don't re-run `pnpm install` before every script; CI already installs explicitly
+allowBuilds: # pnpm 11 replaced onlyBuiltDependencies — only listed pkgs may run install scripts
+  esbuild: true # vite's bundler; needs its postinstall to place the platform binary
+  workerd: true # pulled in by wrangler at deploy time (local Workers runtime)
+  sharp: true # pulled in by wrangler at deploy time (image optimization, native binary)
