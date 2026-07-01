@@ -3,12 +3,12 @@
 // 口径（与历史 compute.js 一致）：
 //   当月存入   deposit         = Σ deposits[].amount
 //   累计本金   cumPrincipal    = Σ deposit
-//   累计收益   cumIncome       = Σ investIncome（可负）
+//   累计损益   cumIncome       = Σ investIncome（可负）
 //   理财真实值 realValue       = cumPrincipal + cumIncome
 //   银行利息   bankInterest    = 当月累计本金 × rate / 12（逐月在累计本金上计息）
 //   累计银行   cumBankInterest = Σ bankInterest
 //   银行账户值 bankValue       = cumPrincipal + cumBankInterest
-//   收益率视图 realIdx/bankIdx = 100 × 账户值 / 累计本金（本金为 0 时为 null）
+//   损益率视图 realIdx/bankIdx = 100 × 账户值 / 累计本金（本金为 0 时为 null）
 //
 // 目标 3.3%–5% 走廊复用同一函数，仅传入不同 bankRate（无独立代码路径）。
 
@@ -21,9 +21,9 @@ export interface Row {
   month: string
   /** 当月存入合计 = Σ deposits[].amount */
   deposit: number
-  /** 当月投资收益（可负） */
+  /** 当月投资损益（可负） */
   investIncome: number
-  /** 累计投资收益 */
+  /** 累计投资损益 */
   cumIncome: number
   cumPrincipal: number
   realValue: number
@@ -68,7 +68,7 @@ export function computeSeries(months: MonthRow[], bankRate: number = BANK_ANNUAL
     const realValue = cumPrincipal + cumIncome
     const bankValue = cumPrincipal + cumBankInterest
 
-    // 归一化收益率视图（起点 100）。本金为 0 时取 null，折线自然断开，避免除零。
+    // 归一化损益率视图（起点 100）。本金为 0 时取 null，折线自然断开，避免除零。
     const realIdx = cumPrincipal > 0 ? (100 * realValue) / cumPrincipal : null
     const bankIdx = cumPrincipal > 0 ? (100 * bankValue) / cumPrincipal : null
 

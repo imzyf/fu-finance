@@ -3,7 +3,7 @@
   --blue: #1677ff;
   --blue-grad: linear-gradient(135deg, #4e9bff 0%, #1677ff 58%, #0e63e6 100%);
   --blue-soft: #e8f1ff;
-  /* 基金金橙（主收益线）*/
+  /* 基金金橙（主损益线）*/
   --gold: #fa8c16;
   /* 中性 */
   --bg: #f2f4f7;
@@ -89,26 +89,29 @@ body {
   color: #fff;
   letter-spacing: 0.3px;
 }
-.badge {
+.badge.ant-tag {
   font-size: 0.7rem;
   color: #fff;
   background: rgba(255, 255, 255, 0.2);
+  border: none;
+  margin: 0;
   padding: 3px 11px;
   border-radius: 999px;
 }
-.banner-label {
+.amount-stat {
+  margin: 0 0 16px;
+}
+.amount-stat .ant-statistic-title {
   font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.86);
-  margin-bottom: 2px;
+  margin-bottom: 6px;
 }
-.banner-amount {
+.amount-stat .ant-statistic-content {
   font-size: 2.5rem;
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.6px;
   line-height: 1;
-  /* 裁掉字体上下的行内留白，使数字更贴近标签与明细 */
-  margin: 10px 0 16px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -118,28 +121,22 @@ body {
   gap: 16px 32px;
   margin-top: 8px;
 }
-.breakdown div {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.breakdown span {
+.breakdown .ant-statistic-title {
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 3px;
 }
-.breakdown b {
+.breakdown .ant-statistic-content {
   font-size: 1.08rem;
   font-weight: 600;
   color: #fff;
   letter-spacing: 0.2px;
   font-variant-numeric: tabular-nums;
 }
-/* 本金（无胶囊的纯文字值）：略大字号 + 与投资收益胶囊同一行高/内边距，保持视觉居中平衡 */
-.breakdown b:not(.up):not(.down) {
+/* 本金（无胶囊的纯文字值）：略大字号，保持视觉居中平衡 */
+.breakdown .principal .ant-statistic-content {
   font-size: 1.22rem;
   line-height: 1.5;
-  display: inline-block;
-  padding: 1px 0;
 }
 
 .chips {
@@ -154,15 +151,19 @@ body {
   background: rgba(255, 255, 255, 0.17);
   border-radius: 13px;
   padding: 9px 13px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
 }
-.chip span {
+.chip .ant-statistic-title {
   font-size: 0.68rem;
   color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.chip b {
+.chip .title-short {
+  display: none;
+}
+.chip .ant-statistic-content {
   font-size: 1.05rem;
   font-weight: 600;
   color: #fff;
@@ -190,7 +191,7 @@ body {
 .banner .down {
   background: #00b578;
 }
-/* 投资收益 / 收益率 两个胶囊：字号与高度保持一致（收益率较长，禁止换行避免变高）*/
+/* 投资损益 / 损益率 两个胶囊：字号与高度保持一致（损益率较长，禁止换行避免变高）*/
 .breakdown .up,
 .breakdown .down {
   font-size: 1.08rem;
@@ -199,12 +200,14 @@ body {
 }
 
 /* ============ 卡片 / cards ============ */
-.card {
+.card.ant-card {
   background: var(--card);
   border-radius: 16px;
-  padding: 20px;
   margin-bottom: 14px;
   box-shadow: 0 2px 12px rgba(20, 30, 55, 0.04);
+}
+.card .ant-card-body {
+  padding: 20px;
 }
 .card h2 {
   font-size: 1rem;
@@ -222,10 +225,6 @@ body {
   border-radius: 2px;
   background: var(--blue);
 }
-.chart-box {
-  height: 340px;
-}
-
 /* ---- 自定义图例 ---- */
 .legend {
   display: flex;
@@ -319,16 +318,17 @@ body {
 .dim {
   color: #5c636e;
 }
-.pill {
-  display: inline-block;
+.pill.ant-tag {
   font-size: 0.76rem;
   font-weight: 600;
   padding: 2px 10px;
+  border: none;
   border-radius: 999px;
+  margin: 0;
   background: var(--up-soft);
   color: var(--up);
 }
-.pill.neg {
+.pill.neg.ant-tag {
   background: var(--down-soft);
   color: var(--down);
 }
@@ -336,11 +336,26 @@ body {
 /* ============ 落款 ============ */
 .slogan {
   text-align: center;
-  margin-top: 20px;
-  font-weight: 800;
-  font-size: 1.02rem;
-  letter-spacing: 0.6px;
-  color: var(--gold);
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line-2);
+}
+.slogan-text {
+  margin: 0 0 4px;
+  font-weight: 600;
+  font-size: 0.84rem;
+  letter-spacing: 0.4px;
+  color: var(--up);
+}
+.slogan-text b {
+  font-weight: 700;
+}
+.copyright {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.2px;
+  color: var(--faint);
+  opacity: 0.8;
 }
 
 /* ============ 动效 ============ */
@@ -366,14 +381,73 @@ body {
   }
 }
 
-@media (max-width: 460px) {
-  .banner-amount {
+/* ============ 手机端 / mobile (≤480px) ============ */
+@media (max-width: 480px) {
+  body {
+    padding: 12px 10px 32px;
+  }
+
+  /* 蓝色横幅：收紧内边距，金额略小，胶囊两列 */
+  .banner {
+    padding: 18px 18px 20px;
+    border-radius: 16px;
+  }
+  .amount-stat .ant-statistic-content {
     font-size: 2.2rem;
   }
   .breakdown {
-    gap: 20px;
+    gap: 14px 24px;
+  }
+  .chips {
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-top: 14px;
   }
   .chip {
-    min-width: calc(50% - 5px);
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 6px 8px;
+  }
+  .chip .ant-statistic-title {
+    font-size: 0.6rem;
+  }
+  .chip .ant-statistic-content {
+    font-size: 0.86rem;
+  }
+  .chip .up,
+  .chip .down {
+    padding: 1px 6px;
+    font-size: 0.76rem;
+    white-space: nowrap;
+  }
+  .chip .title-full {
+    display: none;
+  }
+  .chip .title-short {
+    display: inline;
+  }
+
+  /* 卡片：收紧内边距与标题 */
+  .card .ant-card-body {
+    padding: 14px;
+  }
+  .card h2 {
+    font-size: 0.94rem;
+    margin-bottom: 10px;
+  }
+
+  /* 图表：图例更紧凑（图表高度由 Highcharts responsive 规则控制，见 IncomeChart） */
+  .legend {
+    gap: 8px 14px;
+    font-size: 0.72rem;
+  }
+
+  /* 明细表：单元格更密，横向滚动更顺滑（月份列已固定在左侧） */
+  .ant-table-wrapper .ant-table.ant-table-middle .ant-table-cell {
+    padding: 8px 6px;
+    font-size: 0.8rem;
+  }
+  .ant-table-wrapper .ant-table-content {
+    -webkit-overflow-scrolling: touch;
   }
 }

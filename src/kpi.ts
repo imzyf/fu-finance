@@ -3,12 +3,12 @@
 // These mirror the original index.html banner exactly:
 //   总金额        totalAmount      = 最后一行 realValue（无数据时退回 cumPrincipal + investIncome）
 //   本金          cumPrincipal     = totals.cumPrincipal
-//   投资收益      investIncome     = totals.investIncome
-//   收益率        investIncomeRate = totals.investIncomeRate
+//   投资损益      investIncome     = totals.investIncome
+//   损益率        investIncomeRate = totals.investIncomeRate
 //   年化（本金加权）annualizedRate  = investIncome × 12 / Σ(每月 cumPrincipal)
-//   收益倍数      multiple         = totals.multiple
+//   损益倍数      multiple         = totals.multiple
 //   比定存        lead             = investIncome − bankInterest
-//   定存收益      bankInterest     = totals.bankInterest
+//   定存损益      bankInterest     = totals.bankInterest
 
 import type { Row, Totals } from './compute'
 
@@ -27,7 +27,7 @@ export function deriveKpis(rows: Row[], totals: Totals): Kpis {
   const last = rows.length ? rows[rows.length - 1] : null
   const totalAmount = last ? last.realValue : totals.cumPrincipal + totals.investIncome
 
-  // 本金加权年化：累计收益 × 12 ÷ Σ(每月累计本金)，与银行/目标走廊同口径。
+  // 本金加权年化：累计损益 × 12 ÷ Σ(每月累计本金)，与银行/目标走廊同口径。
   const sumCumPrincipal = rows.reduce((s, r) => s + r.cumPrincipal, 0)
   const annualizedRate = sumCumPrincipal > 0 ? (totals.investIncome * 12) / sumCumPrincipal : 0
 

@@ -1,8 +1,8 @@
-// DetailTable — AntD Table, one row per month. Columns grouped 当月收益 / 累计收益,
+// DetailTable — AntD Table, one row per month. Columns grouped 当月损益 / 累计损益,
 // with a multiple "×" pill. Itemized deposits are revealed via an expandable row so a
 // month with several deposits stays a single table row.
 
-import { Table } from 'antd'
+import { Card, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import type { Row } from '../compute'
 import type { MonthRow } from '../data/types'
@@ -15,7 +15,11 @@ interface MonthRecord extends Row {
 
 const pill = (num: number | null) => {
   if (num === null) return <span className="dim">—</span>
-  return <span className={'pill' + (num < 0 ? ' neg' : '')}>{num.toFixed(2)}×</span>
+  return (
+    <Tag className={'pill' + (num < 0 ? ' neg' : '')} bordered={false}>
+      {num.toFixed(2)}×
+    </Tag>
+  )
 }
 
 const columns: ColumnsType<MonthRecord> = [
@@ -23,6 +27,8 @@ const columns: ColumnsType<MonthRecord> = [
     title: '月份',
     dataIndex: 'month',
     key: 'month',
+    fixed: 'left', // 手机横向滚动时保持月份可见
+    width: 64,
     render: (m: string) => monthLabel(m),
   },
   {
@@ -33,7 +39,7 @@ const columns: ColumnsType<MonthRecord> = [
     render: (d: number) => <span className="dim">{d ? yuan(d) : '—'}</span>,
   },
   {
-    title: '当月收益',
+    title: '当月损益',
     children: [
       {
         title: '投资',
@@ -52,7 +58,7 @@ const columns: ColumnsType<MonthRecord> = [
     ],
   },
   {
-    title: '累计收益',
+    title: '累计损益',
     children: [
       {
         title: '投资',
@@ -91,7 +97,7 @@ export function DetailTable({ rows, months }: Props) {
   }))
 
   return (
-    <section className="card reveal" style={{ animationDelay: '.28s' }}>
+    <Card className="card reveal" variant="borderless" style={{ animationDelay: '.28s' }}>
       <h2>逐月明细</h2>
       <Table<MonthRecord>
         columns={columns}
@@ -120,6 +126,6 @@ export function DetailTable({ rows, months }: Props) {
           ),
         }}
       />
-    </section>
+    </Card>
   )
 }

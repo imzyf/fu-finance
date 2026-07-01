@@ -10,6 +10,7 @@ import { loadWallet } from './data/loadWallet'
 import type { WalletData } from './data/types'
 import { KpiCards } from './components/KpiCards'
 import { IncomeChart } from './components/IncomeChart'
+import { SavingsChart } from './components/SavingsChart'
 import { DetailTable } from './components/DetailTable'
 import { SkeletonScreen, ErrorScreen } from './components/StatusScreens'
 
@@ -49,9 +50,13 @@ export default function App() {
     <main className="wrap">
       <KpiCards kpis={kpis} year={wallet.year} />
       <IncomeChart months={wallet.months} />
+      <SavingsChart months={wallet.months} />
       <DetailTable rows={rows} months={wallet.months} />
       <footer className="slogan reveal" style={{ animationDelay: '.36s' }}>
-        理财多谨慎，目标 3 冲 5 💪
+        <p className="slogan-text">
+          理财多谨慎，目标 <b>3 冲 5</b> 💪
+        </p>
+        <p className="copyright">© {wallet.year} 福宝钱包 · All rights reserved</p>
       </footer>
     </main>
   )

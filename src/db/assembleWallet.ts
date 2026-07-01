@@ -5,6 +5,8 @@
 //   - numeric(string) → number。
 //   - 某月 investIncome = 该月 investments.amount 之和（多笔求和）。
 //   - 月份清单 = investments.date ∪ deposits.date（并集）；某月缺投资行 → investIncome 按 0。
+//   - 末尾若干个「只有存入、还没录入投资」的月份先隐藏（当月投资未填 → 暂不显示，
+//     避免显示成"零损益"）。amount 0 的投资行算已录入，照常显示。
 //   - 按 month 升序。空库 → { year: DEFAULT_YEAR, months: [] }。
 //
 // 当前单一年份；year 取自任一行的 date。多年份 out of scope。
@@ -35,14 +37,17 @@ export function assembleWallet(
   investmentRows: InvestmentInput[],
   depositRows: DepositInput[],
 ): WalletData {
-  // month('MM') → 累加器
-  const byMonth = new Map<string, { investIncome: number; deposits: Deposit[] }>()
+  // month('MM') → 累加器（hasInvestment：该月是否已有投资记录，amount 0 也算）
+  const byMonth = new Map<
+    string,
+    { investIncome: number; hasInvestment: boolean; deposits: Deposit[] }
+  >()
   let year: number | null = null
 
   const ensure = (month: string) => {
     let entry = byMonth.get(month)
     if (!entry) {
-      entry = { investIncome: 0, deposits: [] }
+      entry = { investIncome: 0, hasInvestment: false, deposits: [] }
       byMonth.set(month, entry)
     }
     return entry
@@ -51,7 +56,9 @@ export function assembleWallet(
   for (const row of investmentRows) {
     const { year: y, month } = splitYearMonth(row.date)
     year ??= y
-    ensure(month).investIncome += Number(row.amount)
+    const entry = ensure(month)
+    entry.investIncome += Number(row.amount)
+    entry.hasInvestment = true
   }
 
   for (const row of depositRows) {
@@ -60,9 +67,19 @@ export function assembleWallet(
     ensure(month).deposits.push({ amount: Number(row.amount), notes: row.notes })
   }
 
-  const months: MonthRow[] = [...byMonth.entries()]
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([month, { investIncome, deposits }]) => ({ month, deposits, investIncome }))
+  const sorted = [...byMonth.entries()].sort(([a], [b]) => a.localeCompare(b))
+
+  // 末尾「只有存入、投资未录入」的月份先隐藏（当月投资还没填）。只删末尾，
+  // 保持中间月份的累计连续性。
+  while (sorted.length > 0 && !sorted[sorted.length - 1][1].hasInvestment) {
+    sorted.pop()
+  }
+
+  const months: MonthRow[] = sorted.map(([month, { investIncome, deposits }]) => ({
+    month,
+    deposits,
+    investIncome,
+  }))
 
   return { year: year ?? DEFAULT_YEAR, months }
 }

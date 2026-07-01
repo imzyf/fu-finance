@@ -1,3 +1,10 @@
-# Local-only secrets for `pnpm dev` / seed / drizzle-kit (gitignored — never commit).
-# Neon *dev* branch connection string (not production).
+# Local dev secrets, read by:
+#   - `wrangler dev` (injected into the Worker's env)
+#   - `scripts/env.ts` (drizzle-kit generate/migrate/studio, scripts/dump.ts)
+#
+# Copy this file to `.dev.vars` and fill in real values.
+# `.dev.vars` is gitignored — never commit it.
+
+# Neon Postgres connection string for the *dev* branch (NOT production).
+# Get it from: Neon console -> Project -> Branches -> dev -> Connection string.
 DATABASE_URL="postgresql://neondb_owner:.../neondb?sslmode=require&channel_binding=require"

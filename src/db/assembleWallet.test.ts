@@ -35,7 +35,7 @@ describe('assembleWallet', () => {
 
   it('keeps each deposit as its own itemized row', () => {
     const result = assembleWallet(
-      [],
+      [{ date: '2026-02-01', amount: '44.73' }],
       [
         { date: '2026-02-01', amount: '666.00', notes: '外婆 新年红包' },
         { date: '2026-02-01', amount: '666.00', notes: '外公 新年红包' },
@@ -57,9 +57,22 @@ describe('assembleWallet', () => {
     expect(result.months.map((m) => m.month)).toEqual(['02', '04'])
   })
 
-  it('treats a month with deposits but no investments row as investIncome 0', () => {
+  it('hides a trailing month that has deposits but no investments row yet (current month not filled in)', () => {
     const result = assembleWallet(
-      [],
+      [{ date: '2026-05-01', amount: '529.44' }],
+      [
+        { date: '2026-05-01', amount: '1000.00', notes: '爸妈 月度存储' },
+        { date: '2026-06-01', amount: '600.00', notes: '爷奶 月度存储' },
+      ],
+    )
+
+    // 06 只有存入、投资未录入 → 暂不显示；05 已录入照常显示。
+    expect(result.months.map((m) => m.month)).toEqual(['05'])
+  })
+
+  it('keeps a month whose investments row is amount 0 (recorded, not missing)', () => {
+    const result = assembleWallet(
+      [{ date: '2026-06-01', amount: '0.00' }],
       [{ date: '2026-06-01', amount: '600.00', notes: '爷奶 月度存储' }],
     )
 

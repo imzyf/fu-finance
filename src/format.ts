@@ -11,6 +11,17 @@ export const signedYuan = (n: number): string =>
   '¥' +
   Math.abs(n).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
+/** ¥4k / −¥1.5k — compact axis label; values under 1000 show plain. */
+export const compactYuan = (n: number): string => {
+  const abs = Math.abs(n)
+  const sign = n < 0 ? '−' : ''
+  if (abs >= 1000) {
+    const k = abs / 1000
+    return sign + '¥' + (Number.isInteger(k) ? k : k.toFixed(1)) + 'k'
+  }
+  return sign + '¥' + abs.toLocaleString('zh-CN')
+}
+
 /** '03' -> '3月' */
 export const monthLabel = (m: string): string => parseInt(m, 10) + '月'
 

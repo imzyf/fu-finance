@@ -1,16 +1,18 @@
 // IncomeChart — Highcharts combo over a fixed 12-month axis:
-//   • column  当月收益 (per-point 涨红跌绿)
-//   • line    累计收益 (gold)
+//   • column  当月损益 (per-point 涨红跌绿)
+//   • line    累计损益 (gold)
 //   • line    银行定存 1.4% (gray)
 //   • arearange 目标 3.3%–5% 走廊 (blue band, beneath everything)
 // The target band reuses computeSeries() with bankRate 0.033 / 0.05 — no separate math.
 
+import { Card } from 'antd'
 import Highcharts from 'highcharts'
 import HighchartsMore from 'highcharts/highcharts-more'
 import HighchartsReact from 'highcharts-react-official'
 import { useMemo } from 'react'
 import { computeSeries, type Row } from '../compute'
 import type { MonthRow } from '../data/types'
+import { compactYuan } from '../format'
 import { COLORS } from '../theme'
 
 // arearange lives in the highcharts-more module — register it once.
@@ -63,9 +65,9 @@ export function IncomeChart({ months }: Props) {
         gridLineColor: '#f0f2f5',
         labels: {
           formatter() {
-            return '¥' + this.value
+            return compactYuan(this.value as number)
           },
-          style: { color: '#aab0b8', fontSize: '11px' },
+          style: { color: COLORS.gold, fontSize: '11px' },
         },
       },
       plotOptions: {
@@ -90,13 +92,13 @@ export function IncomeChart({ months }: Props) {
         },
         {
           type: 'column',
-          name: '当月收益',
+          name: '当月损益',
           data: barData,
           zIndex: 1,
         },
         {
           type: 'line',
-          name: '累计收益',
+          name: '累计损益',
           data: col('cumIncome'),
           color: COLORS.gold,
           zIndex: 3,
@@ -144,12 +146,12 @@ export function IncomeChart({ months }: Props) {
   }, [months])
 
   return (
-    <section className="card reveal" style={{ animationDelay: '.2s' }}>
-      <h2>累计收益走势</h2>
+    <Card className="card reveal" variant="borderless" style={{ animationDelay: '.2s' }}>
+      <h2>累计损益走势</h2>
       <div className="legend">
         <span className="lg">
           <span className="mk line" style={{ background: COLORS.gold }} />
-          累计收益
+          累计损益
         </span>
         <span className="lg">
           <span className="mk line" style={{ background: COLORS.bankGray }} />
@@ -161,16 +163,16 @@ export function IncomeChart({ months }: Props) {
         </span>
         <span className="lg">
           <span className="mk bar" />
-          当月收益
+          当月损益
         </span>
       </div>
       <div className="chart-box">
         <HighchartsReact
           highcharts={Highcharts}
           options={options}
-          containerProps={{ style: { height: '100%', width: '100%' } }}
+          containerProps={{ style: { width: '100%' } }}
         />
       </div>
-    </section>
+    </Card>
   )
 }

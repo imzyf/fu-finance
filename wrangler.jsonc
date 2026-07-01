@@ -9,19 +9,19 @@
 		"not_found_handling": "single-page-application", // serve index.html (200) for client-side routes
 		"run_worker_first": ["/api/*"] // /api/* hits the Worker first, bypassing the SPA fallback
 	},
-	"observability": {
-		"enabled": false,
-		"head_sampling_rate": 1,
-		"logs": {
-			"enabled": true,
-			"head_sampling_rate": 1,
-			"persist": true,
-			"invocation_logs": true
-		},
-		"traces": {
-			"enabled": false,
-			"persist": true,
-			"head_sampling_rate": 1
-		}
-	}
+  "observability": {
+    "enabled": false,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": true,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
+  }
 }
