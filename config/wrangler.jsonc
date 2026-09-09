@@ -1,11 +1,11 @@
 {
-	// Worker + static assets: serves the Vite build (SPA) and runs src/worker.ts for /api/*.
-	"$schema": "node_modules/wrangler/config-schema.json",
+	// Worker + static assets: serves the Vite build (SPA) and runs src/server/worker.ts for /api/*.
+	"$schema": "../node_modules/wrangler/config-schema.json",
 	"name": "fu-finance",
 	"compatibility_date": "2026-06-02",
-	"main": "src/worker.ts",
+	"main": "../src/server/worker.ts",
 	"assets": {
-		"directory": "./dist",
+		"directory": "../dist",
 		"not_found_handling": "single-page-application", // serve index.html (200) for client-side routes
 		"run_worker_first": ["/api/*"] // /api/* hits the Worker first, bypassing the SPA fallback
 	},

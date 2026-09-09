@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.worker.tsbuildinfo",
     "target": "ES2022",
     "lib": ["ES2022"],
     "module": "ESNext",
@@ -18,5 +19,5 @@
 
     "types": ["@cloudflare/workers-types"]
   },
-  "include": ["src/worker.ts", "src/db", "src/data/types.ts"]
+  "include": ["../src/server", "../src/domain/wallet.ts"]
 }

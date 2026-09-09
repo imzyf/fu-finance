@@ -12,7 +12,7 @@
 //
 // 目标 3.3%–5% 走廊复用同一函数，仅传入不同 bankRate（无独立代码路径）。
 
-import type { MonthRow } from './data/types'
+import type { MonthRow } from './wallet'
 
 /** 银行固定年化 1.4% */
 export const BANK_ANNUAL_RATE = 0.014

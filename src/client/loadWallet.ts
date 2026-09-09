@@ -2,7 +2,7 @@
 // dev 经 @cloudflare/vite-plugin 在 workerd 命中真实 Worker → Neon dev branch。
 // DB 列类型 + 类型化 assembleWallet 已在源头保证形状，故前端不做运行时校验（不 zod）。
 
-import type { WalletData } from './types'
+import type { WalletData } from '../domain/wallet'
 
 export async function loadWallet(): Promise<WalletData> {
   const res = await fetch('/api/wallet', { cache: 'no-store' })

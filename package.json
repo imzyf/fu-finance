@@ -5,11 +5,14 @@
   "type": "module",
   "packageManager": "pnpm@11.3.0",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "test": "vitest",
-    "typecheck": "tsc -b --noEmit"
+    "dev": "vite --config config/vite.config.ts",
+    "build": "tsc -b config/tsconfig.json && vite build --config config/vite.config.ts",
+    "preview": "vite preview --config config/vite.config.ts",
+    "test": "vitest --config config/vite.config.ts",
+    "typecheck": "tsc -b config/tsconfig.json --noEmit",
+    "db:generate": "drizzle-kit generate --config config/drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config config/drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config config/drizzle.config.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

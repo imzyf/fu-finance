@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname } from 'node:path'
 import { drizzle } from 'drizzle-orm/neon-http'
 import { neon } from '@neondatabase/serverless'
-import { investments, deposits } from '../src/db/schema'
+import { investments, deposits } from '../src/server/db/schema'
 import { databaseUrl } from './env'
 
 const OUT = new URL('../snapshots/wallet.json', import.meta.url)

@@ -3,7 +3,7 @@
 // the white-on-blue / 涨红跌绿 look lives in App.css for visual parity with the original.
 
 import { Statistic, Tag } from 'antd'
-import type { Kpis } from '../kpi'
+import type { Kpis } from '../../domain/kpi'
 import { signedYuan, yuan } from '../format'
 
 /** positive -> red pill, otherwise green pill (matches original posRed). */

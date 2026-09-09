@@ -20,13 +20,13 @@ typecheck: ## Type-check only (no emit)
 	pnpm typecheck
 
 db-generate: ## Generate versioned SQL migration from schema -> drizzle/ (commit it)
-	pnpm drizzle-kit generate
+	pnpm db:generate
 
 db-migrate: ## Apply pending migrations to the .dev.vars / $DATABASE_URL branch
-	pnpm drizzle-kit migrate
+	pnpm db:migrate
 
 db-studio: ## Open Drizzle Studio (point-and-click editor) against that branch
-	pnpm drizzle-kit studio
+	pnpm db:studio
 
 dump: ## Back up Neon data → snapshots/wallet.json (commit it for git history)
 	pnpm tsx scripts/dump.ts

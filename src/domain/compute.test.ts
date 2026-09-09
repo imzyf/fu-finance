@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { computeSeries } from './compute'
-import type { MonthRow } from './data/types'
+import type { MonthRow } from './wallet'
 
 // A fixed, hand-computable fixture. Deliberately independent of the live wallet
 // data (Neon → assembleWallet) so editing real figures never breaks these math tests.

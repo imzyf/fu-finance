@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { computeSeries } from './compute'
 import { deriveKpis } from './kpi'
-import type { MonthRow } from './data/types'
+import type { MonthRow } from './wallet'
 
 // Fixed fixture, independent of live wallet data (see compute.test.ts for the table).
 //   cumPrincipal: 0, 3000, 4500, 5000  → Σ = 12500

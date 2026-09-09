@@ -4,8 +4,8 @@
 
 import { Card, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import type { Row } from '../compute'
-import type { MonthRow } from '../data/types'
+import type { Row } from '../../domain/compute'
+import type { MonthRow } from '../../domain/wallet'
 import { monthLabel, signClass, signedYuan, yuan } from '../format'
 
 interface MonthRecord extends Row {

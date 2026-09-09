@@ -1,4 +1,4 @@
-// 福宝钱包 raw input shape — the single source of truth.
+// Fu Finance wallet contract — the single source of truth shared by client and server.
 //
 // Only three raw facts are recorded per month: which month, the itemized cash-in
 // (deposits), and the aggregate monthly invest income. Every derived number

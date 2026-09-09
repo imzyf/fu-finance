@@ -11,7 +11,7 @@
 //
 // 当前单一年份；year 取自任一行的 date。多年份 out of scope。
 
-import type { WalletData, MonthRow, Deposit } from '../data/types'
+import type { WalletData, MonthRow, Deposit } from '../../domain/wallet'
 
 /** 行的最小形状（只取装配需要的列），与 schema 的 $inferSelect 兼容。 */
 interface InvestmentInput {
