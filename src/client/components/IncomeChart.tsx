@@ -1,9 +1,9 @@
-// IncomeChart — Highcharts combo over a fixed 12-month axis:
-//   • column  当月损益 (per-point 涨红跌绿)
-//   • line    累计损益 (gold)
-//   • line    银行定存 1.4% (gray)
-//   • arearange 目标 3.3%–5% 走廊 (blue band, beneath everything)
-// The target band reuses computeSeries() with bankRate 0.033 / 0.05 — no separate math.
+// IncomeChart — 基于固定 12 个月坐标轴的 Highcharts 组合图：
+//   • 柱形图：当月损益（每个数据点采用涨红跌绿）
+//   • 折线图：累计损益（金色）
+//   • 折线图：银行定存 1.4%（灰色）
+//   • 区域范围图：目标 3.3%–5% 走廊（蓝色带，位于所有图层下方）
+// 目标走廊复用 computeSeries()，分别传入 bankRate 0.033 和 0.05，无独立计算逻辑。
 
 import { Card } from 'antd'
 import Highcharts from 'highcharts'
@@ -15,7 +15,7 @@ import type { MonthRow } from '../../domain/wallet'
 import { compactYuan } from '../format'
 import { COLORS } from '../theme'
 
-// arearange lives in the highcharts-more module — register it once.
+// arearange 位于 highcharts-more 模块中，只需注册一次。
 ;(HighchartsMore as unknown as (hc: typeof Highcharts) => void)(Highcharts)
 
 const FULL_MONTHS = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'))
@@ -53,7 +53,7 @@ export function IncomeChart({ months }: Props) {
       chart: { type: 'line', backgroundColor: 'transparent', spacing: [12, 4, 0, 0] },
       title: { text: undefined },
       credits: { enabled: false },
-      legend: { enabled: false }, // custom legend rendered in markup
+      legend: { enabled: false }, // 自定义图例由标记结构渲染
       xAxis: {
         categories: FULL_MONTHS.map((m) => parseInt(m, 10) + '月'),
         lineColor: '#f0f2f5',
@@ -72,7 +72,7 @@ export function IncomeChart({ months }: Props) {
       },
       plotOptions: {
         series: {
-          enableMouseTracking: false, // 禁用 hover / tooltip 交互
+          enableMouseTracking: false, // 禁用悬停和提示框交互
         },
         column: { borderRadius: 4, pointPadding: 0.18, groupPadding: 0.22 },
         line: { lineWidth: 2 },
@@ -81,7 +81,7 @@ export function IncomeChart({ months }: Props) {
         {
           type: 'arearange',
           name: '年利化 3.3%–5%',
-          // null entries render as gaps at runtime; HC's static type omits null here.
+          // null 项在运行时渲染为断点；Highcharts 的静态类型在此处未包含 null。
           data: bandData as unknown as Highcharts.SeriesArearangeOptions['data'],
           color: COLORS.band,
           fillColor: COLORS.band,

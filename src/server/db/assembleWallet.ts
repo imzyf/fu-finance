@@ -1,15 +1,15 @@
-// assembleWallet — pure assembly from DB rows to WalletData. No DB, no side effects (unit-testable).
+// assembleWallet — 将数据库行纯粹装配为 WalletData，不访问数据库且无副作用（可做单元测试）。
 //
-// 职责（把 DB 形状装配成前端形状）：
-//   - date 'YYYY-MM-01' → year(number) + month('MM')，直接 split('-')，不经 JS Date（避时区偏移）。
-//   - numeric(string) → number。
+// 职责（把数据库数据形状装配成前端数据形状）：
+//   - date 'YYYY-MM-01' → year（数字）+ month（'MM'），直接 split('-')，不经 JS Date（避免时区偏移）。
+//   - numeric（字符串）→ 数字。
 //   - 某月 investIncome = 该月 investments.amount 之和（多笔求和）。
 //   - 月份清单 = investments.date ∪ deposits.date（并集）；某月缺投资行 → investIncome 按 0。
 //   - 末尾若干个「只有存入、还没录入投资」的月份先隐藏（当月投资未填 → 暂不显示，
 //     避免显示成"零损益"）。amount 0 的投资行算已录入，照常显示。
 //   - 按 month 升序。空库 → { year: DEFAULT_YEAR, months: [] }。
 //
-// 当前单一年份；year 取自任一行的 date。多年份 out of scope。
+// 当前仅支持单一年份；year 取自任一行的 date，多年份不在范围内。
 
 import type { WalletData, MonthRow, Deposit } from '../../domain/wallet'
 

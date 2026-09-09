@@ -1,6 +1,6 @@
-// App — page layout: KPI banner + income chart + detail table.
-// 数据运行时从 /api/wallet 读取（loadWallet），三态：loading / error / ready。
-// ready 后逻辑不变：computeSeries → deriveKpis → 渲染。
+// App — 页面布局：KPI 横幅、收益图表和明细表。
+// 数据运行时从 /api/wallet 读取（loadWallet），分为加载中、出错和就绪三种状态。
+// 就绪后依次执行 computeSeries → deriveKpis → 渲染。
 
 import { useEffect, useState } from 'react'
 import './App.css'

@@ -1,4 +1,4 @@
-// assembleWallet.test.ts — locks the DB→WalletData assembly contract (pure, no DB).
+// assembleWallet.test.ts — 固定数据库行到 WalletData 的装配契约（纯函数，不访问数据库）。
 
 import { describe, it, expect } from 'vitest'
 import { assembleWallet } from './assembleWallet'

@@ -1,5 +1,5 @@
-// StatusScreens — loading / error placeholders shown while /api/wallet is in flight or has failed.
-// 仅覆盖网络/空数据（DB + 类型化 assemble 已保证数据形状），形状错误不在此处理。
+// StatusScreens — 请求 /api/wallet 期间或失败后显示的加载和错误占位界面。
+// 仅覆盖网络和空数据场景（数据库与类型化 assemble 已保证数据形状），形状错误不在此处理。
 
 import { Skeleton, Result, Button } from 'antd'
 

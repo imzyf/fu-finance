@@ -38,4 +38,4 @@ jobs:
           wranglerVersion: "4.103.0" # @cloudflare/vite-plugin peer-requires wrangler ^4.103.0
           apiToken: ${{ secrets.CLOUDFLARE_API_PAGES_TOKEN }} # needs Workers Scripts: Edit
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --config config/wrangler.jsonc # DATABASE_URL is a Worker secret, not needed here
+          command: deploy --config dist/fu_finance/wrangler.json # deploy Vite's generated Worker bundle and client assets

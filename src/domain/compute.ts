@@ -1,4 +1,4 @@
-// compute.ts — derive every display series from the raw input (pure: no DOM, no side effects).
+// compute.ts — 从原始输入派生所有展示序列（纯函数：不涉及 DOM，无副作用）。
 //
 // 口径（与历史 compute.js 一致）：
 //   当月存入   deposit         = Σ deposits[].amount

@@ -1,6 +1,6 @@
-// kpi.ts — derive the headline banner numbers from the computed series.
+// kpi.ts — 从计算结果序列中派生横幅的核心数值。
 //
-// These mirror the original index.html banner exactly:
+// 以下字段与原 index.html 横幅完全一致：
 //   总金额        totalAmount      = 最后一行 realValue（无数据时退回 cumPrincipal + investIncome）
 //   本金          cumPrincipal     = totals.cumPrincipal
 //   投资损益      investIncome     = totals.investIncome

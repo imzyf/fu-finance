@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest'
 import { computeSeries } from './compute'
 import type { MonthRow } from './wallet'
 
-// A fixed, hand-computable fixture. Deliberately independent of the live wallet
-// data (Neon → assembleWallet) so editing real figures never breaks these math tests.
+// 采用固定且可手工计算的测试数据，并刻意与实时钱包数据（Neon → assembleWallet）隔离，
+// 避免修改真实金额时破坏这些数学计算测试。
 //
-//   month  deposit            investIncome   cumPrincipal   cumIncome
+//   月份   存入金额           投资损益       累计本金       累计损益
 //   01     0                  0              0              0
 //   02     1000+2000 = 3000   +50            3000           50
 //   03     1500              -200            4500          -150
@@ -24,7 +24,7 @@ const FIXTURE: MonthRow[] = [
   { month: '04', deposits: [{ amount: 500, notes: 'd' }], investIncome: 120 },
 ]
 
-// Small single-month helper for focused unit behaviors.
+// 小型单月辅助函数，用于聚焦测试单项行为。
 const m = (month: string, deposits: MonthRow['deposits'], investIncome: number): MonthRow => ({
   month,
   deposits,

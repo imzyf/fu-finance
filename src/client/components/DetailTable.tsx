@@ -1,6 +1,5 @@
-// DetailTable — AntD Table, one row per month. Columns grouped 当月损益 / 累计损益,
-// with a multiple "×" pill. Itemized deposits are revealed via an expandable row so a
-// month with several deposits stays a single table row.
+// DetailTable — AntD 表格，每月一行。列按当月损益和累计损益分组，
+// 损益倍数使用“×”胶囊展示。存入明细通过展开行显示，因此同月多笔存入仍只占一行。
 
 import { Card, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'

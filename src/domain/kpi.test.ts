@@ -3,9 +3,9 @@ import { computeSeries } from './compute'
 import { deriveKpis } from './kpi'
 import type { MonthRow } from './wallet'
 
-// Fixed fixture, independent of live wallet data (see compute.test.ts for the table).
-//   cumPrincipal: 0, 3000, 4500, 5000  → Σ = 12500
-//   cumIncome (totals.investIncome): -30
+// 固定测试数据，与实时钱包数据无关（数据表见 compute.test.ts）。
+//   累计本金（cumPrincipal）：0, 3000, 4500, 5000 → Σ = 12500
+//   累计损益（cumIncome，即 totals.investIncome）：-30
 const FIXTURE: MonthRow[] = [
   { month: '01', deposits: [], investIncome: 0 },
   {

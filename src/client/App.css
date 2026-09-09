@@ -1,5 +1,5 @@
 :root {
-  /* 支付宝蓝 / Alipay blue */
+  /* 支付宝蓝 */
   --blue: #1677ff;
   --blue-grad: linear-gradient(135deg, #4e9bff 0%, #1677ff 58%, #0e63e6 100%);
   --blue-soft: #e8f1ff;
@@ -42,7 +42,7 @@ body {
   margin: 0 auto;
 }
 
-/* ============ 蓝色钱包横幅 / wallet banner ============ */
+/* ============ 蓝色钱包横幅 ============ */
 .banner {
   position: relative;
   overflow: hidden;
@@ -199,7 +199,7 @@ body {
   white-space: nowrap;
 }
 
-/* ============ 卡片 / cards ============ */
+/* ============ 卡片 ============ */
 .card.ant-card {
   background: var(--card);
   border-radius: 16px;
@@ -272,7 +272,7 @@ body {
   color: var(--muted);
 }
 
-/* ============ 明细表 / table ============ */
+/* ============ 明细表 ============ */
 /* 有存入明细的行：可点击展开 */
 .row-clickable {
   cursor: pointer;
@@ -282,7 +282,7 @@ body {
 .ant-table-wrapper .row-alt > .ant-table-cell {
   background: #f7f9fc;
 }
-/* hover 高亮优先于斑马纹 */
+/* 悬停高亮优先于斑马纹 */
 .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > .ant-table-cell {
   background: var(--blue-soft);
 }
@@ -381,7 +381,7 @@ body {
   }
 }
 
-/* ============ 手机端 / mobile (≤480px) ============ */
+/* ============ 手机端（≤480px）============ */
 @media (max-width: 480px) {
   body {
     padding: 12px 10px 32px;
@@ -436,7 +436,7 @@ body {
     margin-bottom: 10px;
   }
 
-  /* 图表：图例更紧凑（图表高度由 Highcharts responsive 规则控制，见 IncomeChart） */
+  /* 图表：图例更紧凑（图表高度由 Highcharts 响应式规则控制，见 IncomeChart） */
   .legend {
     gap: 8px 14px;
     font-size: 0.72rem;

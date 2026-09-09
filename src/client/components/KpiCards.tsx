@@ -1,12 +1,12 @@
-// KpiCards — the blue wallet banner: the 7 headline numbers from deriveKpis().
-// Each figure is an AntD <Statistic> (title + value) and the year chip is a <Tag>;
-// the white-on-blue / 涨红跌绿 look lives in App.css for visual parity with the original.
+// KpiCards — 蓝色钱包横幅：展示 deriveKpis() 生成的 7 个核心数值。
+// 每个数值使用 AntD <Statistic>（标题和值），年份徽标使用 <Tag>；
+// 蓝底白字和涨红跌绿的样式定义在 App.css 中，以保持与原版一致的视觉效果。
 
 import { Statistic, Tag } from 'antd'
 import type { Kpis } from '../../domain/kpi'
 import { signedYuan, yuan } from '../format'
 
-/** positive -> red pill, otherwise green pill (matches original posRed). */
+/** 正数使用红色胶囊，否则使用绿色胶囊（与原 posRed 逻辑一致）。 */
 const posRed = (n: number): 'up' | 'down' => (n > 0 ? 'up' : 'down')
 
 interface Props {

@@ -1,8 +1,8 @@
-// SavingsChart — Highcharts combo over a fixed 12-month axis:
-//   • column  当月收支 (monthly deposit)      — right y-axis
-//   • line    累计收支 (cumulative principal, gold — matches IncomeChart's 累计损益) — left y-axis
-// Two axes because monthly deposit and cumulative principal sit on very different scales.
-// Modeled on IncomeChart's layout but for cash-in (deposit/cumPrincipal), not invest income.
+// SavingsChart — 基于固定 12 个月坐标轴的 Highcharts 组合图：
+//   • 柱形图：当月收支（当月存入），使用右侧纵轴
+//   • 折线图：累计收支（累计本金，金色，与 IncomeChart 的累计损益一致），使用左侧纵轴
+// 当月存入与累计本金的数量级差异很大，因此使用两条纵轴。
+// 布局沿用 IncomeChart，但展示的是存入（deposit/cumPrincipal），而非投资损益。
 
 import { Card } from 'antd'
 import Highcharts from 'highcharts'
@@ -38,7 +38,7 @@ export function SavingsChart({ months }: Props) {
       chart: { type: 'line', backgroundColor: 'transparent', spacing: [12, 4, 0, 0] },
       title: { text: undefined },
       credits: { enabled: false },
-      legend: { enabled: false }, // custom legend rendered in markup
+      legend: { enabled: false }, // 自定义图例由标记结构渲染
       xAxis: {
         categories: FULL_MONTHS.map((m) => parseInt(m, 10) + '月'),
         lineColor: '#f0f2f5',
@@ -70,7 +70,7 @@ export function SavingsChart({ months }: Props) {
       ],
       plotOptions: {
         series: {
-          enableMouseTracking: false, // 禁用 hover / tooltip 交互
+          enableMouseTracking: false, // 禁用悬停和提示框交互
         },
         column: { borderRadius: 4, pointPadding: 0.18, groupPadding: 0.22 },
         line: { lineWidth: 2 },

@@ -1,8 +1,8 @@
-// theme.ts — shared color tokens, ported from the original CSS custom properties.
-// Reused by KpiCards, IncomeChart and DetailTable so the palette stays in one place.
+// theme.ts — 从原 CSS 自定义属性迁移而来的共享颜色令牌。
+// KpiCards、IncomeChart 和 DetailTable 共用这些颜色，确保调色板集中维护。
 
 export const COLORS = {
-  blue: '#1677ff', // 支付宝蓝 / Alipay blue (AntD colorPrimary)
+  blue: '#1677ff', // 支付宝蓝（AntD colorPrimary）
   gold: '#fa8c16', // 基金金橙：主损益线
   bankGray: '#c8ced6', // 银行 1.4% 线
   band: 'rgba(22,119,255,.24)', // 目标 3.3%–5% 走廊填充
@@ -14,6 +14,6 @@ export const COLORS = {
   faint: '#b6bcc4',
 } as const
 
-/** Text color for a signed value (涨红跌绿); zero falls back to the given neutral. */
+/** 带符号数值的文字颜色（涨红跌绿）；零值使用传入的中性色。 */
 export const signColor = (n: number, neutral: string = COLORS.faint): string =>
   n > 0 ? COLORS.up : n < 0 ? COLORS.down : neutral
