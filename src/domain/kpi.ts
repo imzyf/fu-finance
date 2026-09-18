@@ -8,7 +8,7 @@
 //   年化（本金加权）annualizedRate  = investIncome × 12 / Σ(每月 cumPrincipal)
 //   损益倍数      multiple         = totals.multiple
 //   比定存        lead             = investIncome − bankInterest
-//   定存损益      bankInterest     = totals.bankInterest
+//   定存收益      bankInterest     = totals.bankInterest
 
 import type { Row, Totals } from './compute'
 

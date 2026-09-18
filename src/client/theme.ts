@@ -3,14 +3,17 @@
 
 export const COLORS = {
   blue: '#1677ff', // 支付宝蓝（AntD colorPrimary）
-  gold: '#fa8c16', // 基金金橙：主损益线
-  bankGray: '#c8ced6', // 银行 1.4% 线
-  band: 'rgba(22,119,255,.24)', // 目标 3.3%–5% 走廊填充
-  up: '#fa5151', // 涨/赚 → 红
-  down: '#00b578', // 跌/亏 → 绿
-  upBar: 'rgba(250,81,81,.9)', // 柱子：当月损益 ≥ 0
-  downBar: 'rgba(0,181,120,.85)', // 柱子：当月损益 < 0
-  muted: '#8a9099',
+  gold: '#d48806', // 基金金色：主累计趋势线
+  goldText: '#8c5a00', // 金色系列的坐标轴与数据标签
+  bankGray: '#98a2b3', // 银行 1.4% 线
+  band: 'rgba(36,104,199,.18)', // 目标 3.3%–5% 走廊填充
+  up: '#d9363e', // 涨/赚 → 红
+  down: '#00875a', // 跌/亏 → 绿
+  axis: '#667085',
+  axisLine: '#d8dee8',
+  grid: '#e7ecf2',
+  zeroLine: '#b8c1cd',
+  muted: '#667085',
   faint: '#b6bcc4',
 } as const
 

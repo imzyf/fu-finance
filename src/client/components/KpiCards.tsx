@@ -78,7 +78,7 @@ export function KpiCards({ kpis, year }: Props) {
         />
         <Statistic
           className="chip"
-          title="1.4% 定存损益"
+          title="1.4% 定存收益"
           value={kpis.bankInterest}
           formatter={() => <span className="soft">{yuan(kpis.bankInterest)}</span>}
         />

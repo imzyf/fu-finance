@@ -1,10 +1,10 @@
 :root {
   /* 支付宝蓝 */
   --blue: #1677ff;
-  --blue-grad: linear-gradient(135deg, #4e9bff 0%, #1677ff 58%, #0e63e6 100%);
+  --blue-grad: linear-gradient(135deg, #2468c7 0%, #145fc4 58%, #0b4fad 100%);
   --blue-soft: #e8f1ff;
-  /* 基金金橙（主损益线）*/
-  --gold: #fa8c16;
+  /* 基金金色（主累计趋势线）*/
+  --gold: #d48806;
   /* 中性 */
   --bg: #f2f4f7;
   --card: #ffffff;
@@ -15,9 +15,9 @@
   --line: #f0f2f5;
   --line-2: #eef0f3;
   /* 涨红跌绿 / 仅用于带正负的数值 */
-  --up: #fa5151;
+  --up: #d9363e;
   --up-soft: #fff1f0;
-  --down: #00b578;
+  --down: #00875a;
   --down-soft: #e6fff7;
 
   --num: 'DM Sans', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
@@ -44,6 +44,9 @@ body {
 
 /* ============ 蓝色钱包横幅 ============ */
 .banner {
+  --banner-label: #edf5ff;
+  --banner-value: #fff;
+  --banner-soft-value: #dbeafe;
   position: relative;
   overflow: hidden;
   background: var(--blue-grad);
@@ -86,14 +89,14 @@ body {
 .brand {
   font-size: 0.94rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--banner-value);
   letter-spacing: 0.3px;
 }
 .badge.ant-tag {
   font-size: 0.7rem;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
+  color: var(--banner-value);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   margin: 0;
   padding: 3px 11px;
   border-radius: 999px;
@@ -101,15 +104,15 @@ body {
 .amount-stat {
   margin: 0 0 16px;
 }
-.amount-stat .ant-statistic-title {
+.amount-stat .ant-statistic-header .ant-statistic-title {
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.86);
+  color: var(--banner-label);
   margin-bottom: 6px;
 }
 .amount-stat .ant-statistic-content {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--banner-value);
   letter-spacing: -0.6px;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -121,15 +124,15 @@ body {
   gap: 16px 32px;
   margin-top: 8px;
 }
-.breakdown .ant-statistic-title {
+.breakdown .ant-statistic-header .ant-statistic-title {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--banner-label);
   margin-bottom: 3px;
 }
 .breakdown .ant-statistic-content {
   font-size: 1.08rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--banner-value);
   letter-spacing: 0.2px;
   font-variant-numeric: tabular-nums;
 }
@@ -148,13 +151,14 @@ body {
 .chip {
   flex: 1;
   min-width: 100px;
-  background: rgba(255, 255, 255, 0.17);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 13px;
   padding: 9px 13px;
 }
-.chip .ant-statistic-title {
+.chip .ant-statistic-header .ant-statistic-title {
   font-size: 0.68rem;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--banner-label);
   margin-bottom: 3px;
   white-space: nowrap;
   overflow: hidden;
@@ -166,30 +170,30 @@ body {
 .chip .ant-statistic-content {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--banner-value);
   letter-spacing: 0.2px;
   font-variant-numeric: tabular-nums;
 }
 
 /* 头部：与正负相关的数字用 涨红跌绿（红/绿胶囊底 + 白字）；本金/总额/基准用白 */
 .banner .soft {
-  color: rgba(255, 255, 255, 0.86);
+  color: var(--banner-soft-value);
 }
 .banner .up,
 .banner .down {
   display: inline-block;
   align-self: flex-start;
-  color: #fff;
+  color: var(--banner-value);
   padding: 1px 9px;
   border-radius: 999px;
   font-weight: 700;
   text-shadow: none;
 }
 .banner .up {
-  background: #fa5151;
+  background: var(--up);
 }
 .banner .down {
-  background: #00b578;
+  background: var(--down);
 }
 /* 投资损益 / 损益率 两个胶囊：字号与高度保持一致（损益率较长，禁止换行避免变高）*/
 .breakdown .up,
@@ -288,6 +292,8 @@ body {
 }
 
 .detail-deposits {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
   margin: 0;
   padding: 4px 0 4px 2px;
   list-style: none;
@@ -295,10 +301,14 @@ body {
   color: var(--ink-2);
 }
 .detail-deposits li {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   gap: 20px;
   padding: 3px 0;
+}
+.detail-deposits li > span:first-child {
+  text-align: right;
 }
 .detail-deposits .notes {
   color: var(--muted);
@@ -408,7 +418,7 @@ body {
     min-width: 0;
     padding: 6px 8px;
   }
-  .chip .ant-statistic-title {
+  .chip .ant-statistic-header .ant-statistic-title {
     font-size: 0.6rem;
   }
   .chip .ant-statistic-content {

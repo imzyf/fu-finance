@@ -1,6 +1,7 @@
 // SavingsChart — 基于固定 12 个月坐标轴的 Highcharts 组合图：
 //   • 柱形图：当月收支（当月存入），使用右侧纵轴
 //   • 折线图：累计收支（累计本金，金色，与 IncomeChart 的累计损益一致），使用左侧纵轴
+//   • 折线图：总金额（累计收支 + 累计损益，灰色），使用左侧纵轴
 // 当月存入与累计本金的数量级差异很大，因此使用两条纵轴。
 // 布局沿用 IncomeChart，但展示的是存入（deposit/cumPrincipal），而非投资损益。
 
@@ -31,19 +32,19 @@ export function SavingsChart({ months }: Props) {
     const barData = FULL_MONTHS.map((m) => {
       const r = rows[m]
       if (!r) return null
-      return { y: r.deposit, color: r.deposit >= 0 ? COLORS.upBar : COLORS.downBar }
+      return { y: r.deposit, color: r.deposit >= 0 ? COLORS.up : COLORS.down }
     })
 
     return {
-      chart: { type: 'line', backgroundColor: 'transparent', spacing: [12, 4, 0, 0] },
+      chart: { type: 'line', backgroundColor: 'transparent', spacing: [12, 2, 0, 8] },
       title: { text: undefined },
       credits: { enabled: false },
       legend: { enabled: false }, // 自定义图例由标记结构渲染
       xAxis: {
         categories: FULL_MONTHS.map((m) => parseInt(m, 10) + '月'),
-        lineColor: '#f0f2f5',
+        lineColor: COLORS.axisLine,
         tickWidth: 0,
-        labels: { style: { color: '#9aa0a8', fontSize: '12px' } },
+        labels: { style: { color: COLORS.axis, fontSize: '12px' } },
       },
       yAxis: [
         {
@@ -51,20 +52,22 @@ export function SavingsChart({ months }: Props) {
           gridLineWidth: 0,
           opposite: true,
           labels: {
+            x: 6,
             formatter() {
               return compactYuan(this.value as number)
             },
-            style: { color: '#aab0b8', fontSize: '11px' },
+            style: { color: COLORS.axis, fontSize: '11px' },
           },
         },
         {
           title: { text: undefined },
-          gridLineColor: '#f0f2f5',
+          gridLineColor: COLORS.grid,
           labels: {
+            x: -6,
             formatter() {
               return compactYuan(this.value as number)
             },
-            style: { color: COLORS.gold, fontSize: '11px' },
+            style: { color: COLORS.goldText, fontSize: '11px' },
           },
         },
       ],
@@ -72,7 +75,7 @@ export function SavingsChart({ months }: Props) {
         series: {
           enableMouseTracking: false, // 禁用悬停和提示框交互
         },
-        column: { borderRadius: 4, pointPadding: 0.18, groupPadding: 0.22 },
+        column: { borderWidth: 0, borderRadius: 4, pointPadding: 0.18, groupPadding: 0.22 },
         line: { lineWidth: 2 },
       },
       series: [
@@ -95,7 +98,7 @@ export function SavingsChart({ months }: Props) {
               fontWeight: '500',
               textOutline: '3px #fff',
             },
-            y: -6,
+            distance: 6,
           },
         },
         {
@@ -113,13 +116,22 @@ export function SavingsChart({ months }: Props) {
               return (v < 0 ? '−' : '') + '¥' + Math.round(Math.abs(v)).toLocaleString('zh-CN')
             },
             style: {
-              color: COLORS.gold,
+              color: COLORS.goldText,
               fontSize: '11px',
               fontWeight: '500',
               textOutline: '3px #fff', // 白色描边，提升在折线/柱子上的可读性
             },
             y: -6,
           },
+        },
+        {
+          type: 'line',
+          name: '总金额',
+          data: col('realValue'),
+          color: COLORS.bankGray,
+          yAxis: 1,
+          zIndex: 2,
+          marker: { enabled: true, radius: 3 },
         },
       ],
     }
@@ -132,6 +144,10 @@ export function SavingsChart({ months }: Props) {
         <span className="lg">
           <span className="mk line" style={{ background: COLORS.gold }} />
           累计收支
+        </span>
+        <span className="lg">
+          <span className="mk line" style={{ background: COLORS.bankGray }} />
+          总金额
         </span>
         <span className="lg">
           <span className="mk bar" />
