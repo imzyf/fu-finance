@@ -6,7 +6,7 @@
 
 import { Card } from 'antd'
 import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
+import { HighchartsReact } from 'highcharts-react-official'
 import { useMemo } from 'react'
 import { computeSeries, type Row } from '../../domain/compute'
 import type { MonthRow } from '../../domain/wallet'
