@@ -441,6 +441,9 @@ body {
   .card .ant-card-body {
     padding: 14px;
   }
+  .chart-card .ant-card-body {
+    padding: 6px;
+  }
   .card h2 {
     font-size: 0.94rem;
     margin-bottom: 10px;

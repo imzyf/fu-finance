@@ -40,6 +40,7 @@ export function SavingsChart({ months }: Props) {
       title: { text: undefined },
       credits: { enabled: false },
       legend: { enabled: false }, // 自定义图例由标记结构渲染
+      tooltip: { enabled: false, followTouchMove: false },
       xAxis: {
         categories: FULL_MONTHS.map((m) => parseInt(m, 10) + '月'),
         lineColor: COLORS.axisLine,
@@ -138,7 +139,11 @@ export function SavingsChart({ months }: Props) {
   }, [months])
 
   return (
-    <Card className="card reveal" variant="borderless" style={{ animationDelay: '.24s' }}>
+    <Card
+      className="card chart-card reveal"
+      variant="borderless"
+      style={{ animationDelay: '.24s' }}
+    >
       <h2>累计收支走势</h2>
       <div className="legend">
         <span className="lg">

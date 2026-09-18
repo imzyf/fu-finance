@@ -54,6 +54,7 @@ export function IncomeChart({ months }: Props) {
       title: { text: undefined },
       credits: { enabled: false },
       legend: { enabled: false }, // 自定义图例由标记结构渲染
+      tooltip: { enabled: false, followTouchMove: false },
       xAxis: {
         categories: FULL_MONTHS.map((m) => parseInt(m, 10) + '月'),
         lineColor: COLORS.axisLine,
@@ -168,7 +169,7 @@ export function IncomeChart({ months }: Props) {
   }, [months])
 
   return (
-    <Card className="card reveal" variant="borderless" style={{ animationDelay: '.2s' }}>
+    <Card className="card chart-card reveal" variant="borderless" style={{ animationDelay: '.2s' }}>
       <h2>累计损益走势</h2>
       <div className="legend">
         <span className="lg">
