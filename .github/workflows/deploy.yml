@@ -17,13 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod # use the "prod" Environment's secrets + protection rules
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: pnpm/action-setup@v4 # version read from package.json "packageManager"
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6; version read from package.json "packageManager"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
-          node-version: 24 # pnpm 11 requires Node >= 22.13
+          node-version: 24 # build and Workers tooling runtime
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
@@ -33,9 +33,9 @@ jobs:
       - run: pnpm build # tsc + vite build (@cloudflare/vite-plugin bundles the Worker too) → dist/
 
       - name: Deploy the Worker + static assets to Cloudflare
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4
         with:
-          wranglerVersion: "4.132.0" # @cloudflare/vite-plugin peer-requires wrangler ^4.103.0
+          wranglerVersion: "4.132.0" # @cloudflare/vite-plugin peer-requires wrangler ^4.131.2
           apiToken: ${{ secrets.CLOUDFLARE_API_PAGES_TOKEN }} # needs Workers Scripts: Edit
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --config dist/fu_finance/wrangler.json # deploy Vite's generated Worker bundle and client assets

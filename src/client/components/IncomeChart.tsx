@@ -7,16 +7,13 @@
 
 import { Card } from 'antd'
 import Highcharts from 'highcharts'
-import HighchartsMore from 'highcharts/highcharts-more'
+import 'highcharts/highcharts-more'
 import HighchartsReact from 'highcharts-react-official'
 import { useMemo } from 'react'
 import { computeSeries, type Row } from '../../domain/compute'
 import type { MonthRow } from '../../domain/wallet'
 import { compactYuan } from '../format'
 import { COLORS } from '../theme'
-
-// arearange 位于 highcharts-more 模块中，只需注册一次。
-;(HighchartsMore as unknown as (hc: typeof Highcharts) => void)(Highcharts)
 
 const FULL_MONTHS = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'))
 
@@ -128,7 +125,7 @@ export function IncomeChart({ months }: Props) {
           dataLabels: {
             enabled: true,
             formatter() {
-              if (this.point.index !== lastBankIdx) return undefined
+              if (this.index !== lastBankIdx) return undefined
               return '¥' + Math.round(this.y as number).toLocaleString('zh-CN')
             },
             verticalAlign: 'top',

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests",
+    "schedule:daily"
+  ],
+  "timezone": "Asia/Singapore",
+  "packageRules": [
+    {
+      "description": "Keep routine dependency updates from every manager in one PR",
+      "matchPackageNames": ["*"],
+      "groupName": "All dependencies",
+      "groupSlug": "all-dependencies",
+      "separateMajorMinor": false
+    },
+    {
+      "description": "Wait until npm packages are outside the registry unpublish window",
+      "matchDatasources": ["npm"],
+      "minimumReleaseAge": "3 days"
+    }
+  ]
+}
