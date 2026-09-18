@@ -35,7 +35,7 @@ jobs:
       - name: Deploy the Worker + static assets to Cloudflare
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4
         with:
-          wranglerVersion: "4.132.0" # @cloudflare/vite-plugin peer-requires wrangler ^4.131.2
+          wranglerVersion: "4.131.2" # match the installed version; @cloudflare/vite-plugin accepts ^4.131.2
           apiToken: ${{ secrets.CLOUDFLARE_API_PAGES_TOKEN }} # needs Workers Scripts: Edit
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --config dist/fu_finance/wrangler.json # deploy Vite's generated Worker bundle and client assets
